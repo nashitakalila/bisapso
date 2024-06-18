@@ -26,7 +26,9 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Set up Docker Compose
-        run: sudo apt-get install docker-compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
 
       - name: Build and run containers
         run: |
@@ -42,7 +44,13 @@ jobs:
 
       - name: Run tests
         run: |
-          curl http://127.0.0.1:5000  # Ubah perintah ini sesuai dengan tes Anda
+          curl http://127.0.0.1:5000
+
+      - name: Check container status
+        run: docker ps -a
+
+      - name: Check container logs
+        run: docker logs mlops
 
       - name: Tear down
         run: docker-compose down
